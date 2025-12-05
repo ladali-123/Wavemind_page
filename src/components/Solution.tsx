@@ -77,7 +77,7 @@ export default function Solution() {
     <section className="py-16 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4">
+          <div className="inline-block bg-gradient-to-r from-[#1A2F42] to-[#375A78] text-white px-6 py-2 rounded-full text-sm font-semibold mb-4">
             Complete Solution
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
@@ -117,19 +117,19 @@ export default function Solution() {
           })}
         </div>
 
-        <div className="mt-16 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 rounded-3xl p-8 sm:p-12 shadow-2xl">
+        <div className="mt-16 bg-gradient-to-r from-[#375A78] via-[#375A78] to-[#375A78] rounded-3xl p-8 sm:p-12 shadow-2xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-blue-900">
+            <div className="text-yellow-400">
               <h3 className="text-3xl sm:text-4xl font-bold mb-3">
                 Aaj Hi Start Karein! 🚀
               </h3>
-              <p className="text-xl text-blue-800">
+              <p className="text-xl text-yellow-400">
                 First doubt-solving session completely FREE
               </p>
             </div>
             <button
               onClick={() => document.getElementById('doubt-form')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-blue-900 hover:bg-blue-800 text-white font-bold px-10 py-5 rounded-xl text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 whitespace-nowrap"
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-10 py-5 rounded-xl text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 whitespace-nowrap"
             >
               Get Started Now
             </button>

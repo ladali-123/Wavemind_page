@@ -1,16 +1,11 @@
-import { Award, BookOpen, GraduationCap, Target, Users, Zap } from 'lucide-react';
+import { Award, BookOpen, GraduationCap, Target, Zap } from 'lucide-react';
 
 export default function About() {
-  const stats = [
-    { icon: Users, value: '5000+', label: 'Students Taught' },
-    { icon: BookOpen, value: '10,000+', label: 'Doubts Solved' },
-    { icon: Award, value: '98%', label: 'Success Rate' },
-    { icon: Zap, value: '24hr', label: 'Response Time' },
-  ];
-
   return (
     <section className="py-16 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* TOP GRID (UNCHANGED) */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <div>
             <div className="inline-block bg-blue-100 text-blue-700 px-6 py-2 rounded-full text-sm font-semibold mb-6">
@@ -31,11 +26,16 @@ export default function About() {
               </p>
 
               <p>
-                Hum <strong className="text-blue-600">personalized doubt-solving</strong>, <strong className="text-blue-600">concept clarity sessions</strong>, aur <strong className="text-blue-600">modern teaching techniques</strong> use karte hain — jisse aapki understanding aur score dono improve ho.
+                Hum <strong className="text-blue-800">personalized doubt-solving</strong>,
+                 <strong className="text-blue-800">concept clarity sessions<br/></strong>, 
+                 aur <strong className="text-blue-900">modern teaching techniques</strong>
+                  use karte hain — jisse aapki understanding aur score dono improve ho.
               </p>
 
               <p>
-                Humari team me experienced educators hain jo specifically Class 11 curriculum ko deeply samajhte hain. Har teacher student-friendly approach rakhta hai aur complex topics ko simple language me explain karta hai.
+                Humari team me experienced educators hain jo specifically Class 11 curriculum ko 
+                deeply samajhte hain. Har teacher student-friendly approach rakhta hai aur complex topics 
+                ko simple language me explain karta hai.
               </p>
             </div>
 
@@ -45,16 +45,17 @@ export default function About() {
                 <span className="font-semibold text-green-700">Live Classes Available</span>
               </div>
               <div className="flex items-center gap-3 bg-blue-50 px-6 py-3 rounded-lg border border-blue-200">
-                <Award className="w-5 h-5 text-blue-600" />
-                <span className="font-semibold text-blue-700">Certified Teachers</span>
+                <Award className="w-5 h-5 text-[#375A78]" />
+                <span className="font-semibold text-[#375A78]">Certified Teachers</span>
               </div>
             </div>
           </div>
 
+          {/* RIGHT SIDE CARD (UNCHANGED) */}
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-yellow-400 rounded-3xl blur-3xl opacity-20"></div>
 
-            <div className="relative bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-8 shadow-2xl">
+            <div className="relative bg-gradient-to-br from-[#375A78] to-[#243F57] rounded-3xl p-8 shadow-2xl">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
                 <div className="flex items-center justify-center mb-6">
                   <div className="bg-yellow-400 p-4 rounded-full">
@@ -91,35 +92,15 @@ export default function About() {
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
+
         </div>
 
-        <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-3xl p-8 sm:p-12">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Our Impact in Numbers
-          </h3>
+        {/* IMPACT/NUMBERS SECTION REMOVED */}
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="text-center bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="inline-flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 w-16 h-16 rounded-2xl mb-4">
-                  <stat.icon className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-4xl font-bold text-gray-900 mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-gray-600 font-medium">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

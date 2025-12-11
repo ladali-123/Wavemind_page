@@ -1,6 +1,10 @@
 import { AlertCircle, BookX, Calculator, Clock, Frown, TrendingDown } from 'lucide-react';
 
 export default function ProblemStatement() {
+  const scrollToForm = () => {
+    document.getElementById('doubt-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const problems = [
     { icon: BookX, text: 'Kuch topics class me samajh hi nahi aaye' },
     { icon: TrendingDown, text: 'Numerical weak lag rahe hain' },
@@ -25,17 +29,21 @@ export default function ProblemStatement() {
               {problems.map((problem, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-4 bg-white p-4 sm:p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border-l-4 border-red-500"
+                  className="flex items-start gap-4 bg-white p-4 sm:p-6 rounded-xl 
+                  shadow-md hover:shadow-xl transition-shadow duration-300 border-l-4
+                   border-red-500"
                 >
                   <div className="bg-red-100 p-2 sm:p-3 rounded-lg flex-shrink-0">
                     <problem.icon className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
                   </div>
-                  <p className="text-base sm:text-lg text-gray-700 font-medium pt-1">{problem.text}</p>
+                  <p className="text-base sm:text-lg text-gray-700 
+                  font-medium pt-1">{problem.text}</p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-10 bg-gradient-to-r from-[#375A78] to-[#375A78] text-white p-6 sm:p-8 rounded-2xl shadow-xl">
+            <div className="mt-10 bg-gradient-to-r from-[#375A78] to-[#375A78] 
+             text-white p-6 sm:p-8 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer" onClick={scrollToForm}>
               <div className="flex items-center gap-4">
                 <div className="bg-yellow-400 p-3 sm:p-4 rounded-full flex-shrink-0">
                   <Calculator className="w-6 h-6 sm:w-8 sm:h-8 text-blue-900" />
@@ -63,7 +71,8 @@ export default function ProblemStatement() {
                     Physics Problems?
                   </h3>
                   <p className="text-gray-600 text-base sm:text-lg">
-                    Har student ko kabhi na kabhi Physics difficult lagti hai. But worry not!
+                    Har student ko kabhi na kabhi Physics difficult lagti hai.
+                     But worry not!
                   </p>
 
                   {/* Responsive cards */}
@@ -73,7 +82,7 @@ export default function ProblemStatement() {
                       <div className="text-sm sm:text-base text-gray-600 mt-1">Students struggle</div>
                     </div>
                     <div className="bg-yellow-50 p-3 sm:p-4 rounded-lg">
-                      <div className="text-2xl sm:text-2xl font-bold text-yellow-600">45m</div>
+                      <div className="text-2xl sm:text-2xl font-bold text-yellow-600">45%</div>
                       <div className="text-sm sm:text-base text-gray-600 mt-1">Avg confusion</div>
                     </div>
                     <div className="bg-green-50 p-3 sm:p-4 rounded-lg">

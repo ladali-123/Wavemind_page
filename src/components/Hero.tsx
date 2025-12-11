@@ -18,14 +18,20 @@ export default function Hero() {
               WaveMindEdu
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4 sm:mb-6">
-              Completed Class 11 Physics syllabus<br />
-              <span className="text-yellow-400">but struggling with concepts? </span>
-              <span className="text-yellow-300">WaveMindEdu clarifies everything.</span>
+            <h1 className="text-1xl sm:text-3xl lg:text-4xl font-bold leading-loose 
+            mb-4 sm:mb-6">
+              <span className="block">Completed Class 11 Physics syllabus but 
+                struggling with </span>
+              <span className="block text-white text-1xl sm:text-3xl
+               lg:text-4xl"> concepts?</span><br/>
+              <span className="block text-yellow-300 text-lg sm:text-2xl
+               lg:text-3xl">WaveMindEdu clarifies everything.</span>
             </h1>
 
             <p className="text-lg sm:text-xl text-blue-100 mb-6 sm:mb-8 leading-relaxed">
-              Share your doubt, and our experts will simplify every concept with live 1-on-1 support, step-by-step explanations, and crystal-clear revisions.
+              Share your doubt, and our experts will
+               simplify every concept with live 1-on-1 support, step-by-step
+                explanations, and crystal-clear revisions.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -80,9 +86,9 @@ export default function Hero() {
                     <span className="text-base sm:text-lg font-medium">Instant Doubt Clearing</span>
                   </div>
 
-                  <div className="bg-gradient-to-r from-[#375A78] to-[#2F5271] text-white text-center py-2 sm:py-3 rounded-lg mt-4 sm:mt-6 font-semibold text-sm sm:text-base">
+                  <button onClick={scrollToForm} className="w-full bg-gradient-to-r from-[#375A78] to-[#2F5271] text-white text-center py-2 sm:py-3 rounded-lg mt-4 sm:mt-6 font-semibold text-sm sm:text-base hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer">
                     Join 5000+ Happy Students
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>

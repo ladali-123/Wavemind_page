@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Send, CheckCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+// Note: EmailJS is loaded dynamically in the submit handler to avoid
+// potential render/SSR errors from importing a browser-only library at module scope.
 
 export default function DoubtForm() {
   const [formData, setFormData] = useState({
     fullName: '',
     mobile: '',
     topic: '',
+    email: '', // Optional: add if you want a student email for reply
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -18,6 +21,7 @@ export default function DoubtForm() {
     setError('');
 
     try {
+      // Save to Supabase
       const { error: submitError } = await supabase
         .from('doubt_submissions')
         .insert([
@@ -30,15 +34,53 @@ export default function DoubtForm() {
 
       if (submitError) throw submitError;
 
-      setIsSubmitted(true);
-      setFormData({ fullName: '', mobile: '', topic: '' });
+      // Send email via EmailJS (lazy-load the library to avoid render errors)
+      try {
+        const serviceId = String(import.meta.env.VITE_EMAILJS_SERVICE || '');
+        const templateId = String(import.meta.env.VITE_EMAILJS_TEMPLATE || '');
+        const publicKey = String(import.meta.env.VITE_EMAILJS_KEY || '');
+        console.log('EmailJS sending with serviceId=', serviceId, 'templateId=', templateId, 'publicKey=', publicKey);
+        if (typeof window !== 'undefined' && serviceId && templateId && publicKey) {
+          const emailjs = await import('@emailjs/browser');
+          // Initialize with public key (safe; public key is intended for client-side use)
+          try {
+            emailjs.init(publicKey);
+          } catch (initErr) {
+            console.warn('EmailJS init warning:', initErr);
+          }
 
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
-    } catch (err) {
-      setError('Submission failed. Please try again.');
-      console.error('Error:', err);
+          const response = await emailjs.send(serviceId, templateId, {
+            to_email: 'wavemindedu@gmail.com',
+            student_name: formData.fullName,
+            student_mobile: formData.mobile,
+            student_doubt: formData.topic,
+            reply_to: 'no-reply@wavemindedu.com',
+          });
+          console.log('EmailJS response:', response);
+          if ((response as any)?.status && (response as any).status !== 200) {
+            const st = (response as any).status;
+            const txt = (response as any).text || JSON.stringify(response);
+            setError(`Email send failed: status ${st} - ${txt}`);
+            console.warn('EmailJS reported non-200 response:', response);
+          }
+        } else {
+          console.warn('EmailJS service/template/public key not configured or running in non-browser environment. Skipping email.');
+        }
+      } catch (emailError: any) {
+        const status = emailError?.status || 'unknown';
+        const text = emailError?.text || emailError?.message || String(emailError);
+        console.error('EmailJS send failed:', status, text, emailError);
+        setError(`Email send failed: ${status} - ${text}. Check EmailJS dashboard (service/template/key).`);
+      }
+
+      setIsSubmitted(true);
+      setFormData({ fullName: '', mobile: '', topic: '', email: '' });
+
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (err: any) {
+      const message = err?.message || String(err);
+      setError(`Submission failed: ${message}`);
+      console.error('Submission error:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -72,26 +114,14 @@ export default function DoubtForm() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
+              {['Quick 24-hour response guaranteed', 'No payment required upfront', 'Expert Class 11 Physics teachers'].map((text, idx) => (
+                <div className="flex items-center gap-4" key={idx}>
+                  <div className="bg-green-100 p-3 rounded-full">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                  </div>
+                  <span className="text-lg text-gray-700">{text}</span>
                 </div>
-                <span className="text-lg text-gray-700">Quick 24-hour response guaranteed</span>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                </div>
-                <span className="text-lg text-gray-700">No payment required upfront</span>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="bg-green-100 p-3 rounded-full">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                </div>
-                <span className="text-lg text-gray-700">Expert Class 11 Physics teachers</span>
-              </div>
+              ))}
             </div>
 
             <div className="mt-10 bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
@@ -125,14 +155,10 @@ export default function DoubtForm() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                    Submit Your Physics Doubt
-                  </h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Submit Your Physics Doubt</h3>
 
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Full Name *
-                    </label>
+                    <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
                     <input
                       type="text"
                       id="fullName"
@@ -146,9 +172,7 @@ export default function DoubtForm() {
                   </div>
 
                   <div>
-                    <label htmlFor="mobile" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Mobile Number *
-                    </label>
+                    <label htmlFor="mobile" className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
                     <input
                       type="tel"
                       id="mobile"
